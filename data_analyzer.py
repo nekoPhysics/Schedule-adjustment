@@ -4,7 +4,7 @@ import numpy as np
 
 n = 5
 # import csv
-df = pd.read_csv('gashuku_data.csv')
+df = pd.read_csv('data.csv')
 
 
 def calc_points(df):
@@ -15,7 +15,6 @@ def calc_points(df):
     # Pref_dateを個別の日付に分割
     dates_points = df.apply(lambda row: pd.Series(row['Pref_date'].split(', ')), axis=1).stack().reset_index(level=1, drop=True).to_frame('Pref_date')
     dates_points['points'] = np.repeat(df['points'].values, dates_points.groupby(level=0).size().values)
-
     # df.groupby(集計カテゴリ)[スコア]
     return dates_points
 
